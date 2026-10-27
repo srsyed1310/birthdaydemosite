@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zara's Birthday Surprise</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#4f96d1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fredoka:wght@400;500;600;700&family=Homemade+Apple&family=Outfit:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--BODY-->
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <div class="lk" data-art="heartLock"></div>
+  <p>Wrapping your surprise</p>
+  <div class="ld"><i></i><i></i><i></i></div>
+</div>
+
+<button class="soundbtn" id="soundBtn" type="button" aria-label="Pause music" hidden></button>
+
+<main id="app">
+
+  <section class="screen" id="lock" aria-label="Enter the secret code">
+    <div class="bg" data-bg="cream"></div>
+    <div class="inner center">
+      <div class="lockheart" data-art="heartLock"></div>
+      <p class="pen">From: <span data-me></span><br>For: <span data-her></span><br><em>a little secret…</em></p>
+      <div class="dots" id="pinDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="keypad" id="keypad" role="group" aria-label="Keypad"></div>
+      <p class="hint" id="pinHint"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="hello" aria-label="Happy birthday">
+    <div class="bg" data-bg="flowers"></div>
+    <div class="inner center">
+      <h1 class="hl-title" id="helloTitle"></h1>
+      <p class="hl-sub" id="helloSub"></p>
+      <div class="stickercard" data-art="bunnyCake"></div>
+      <button class="pill blue" id="helloNext" type="button"><span>NEXT</span><span data-icon="next"></span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="ready" aria-label="Are you ready">
+    <div class="bg" data-bg="sky"></div>
+    <div class="inner center">
+      <span class="heartdot" aria-hidden="true">&#10084;</span>
+      <h1 class="rd-title">Are you ready for the surprise?</h1>
+      <div class="stickercard" id="readyCard">
+        <div class="bubble" id="bubble" aria-live="polite">Don't do this to me! 💔</div>
+        <div data-art="bunnyPlead"></div>
+      </div>
+      <button class="yes" id="yesBtn" type="button">YES 💖</button>
+    </div>
+    <button class="no" id="noBtn" type="button">NO 🙈</button>
+  </section>
+
+  <section class="screen" id="gifts" aria-label="Your gifts">
+    <div class="bg plain gifts-bg"></div>
+    <div class="inner center">
+      <h1 class="gf-title">GIFT FOR YOU</h1>
+      <div class="giftrow" id="giftRow"></div>
+      <p class="gf-hint" id="giftHint">click any gift to open</p>
+      <div class="unlock" id="unlock" hidden>
+        <span class="chip red"><span data-icon="wand"></span> ALL 3 GIFTS UNLOCKED!</span>
+        <button class="pill big blue" id="finalBtn" type="button"><span>OPEN FINAL SURPRISE</span><span data-icon="gift"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen dark" id="cake" aria-label="Birthday cake">
+    <div class="bg navy"></div>
+    <button class="back" type="button" data-go="gifts"><span data-icon="back"></span><span>BACK TO GIFTS</span></button>
+    <div class="inner center">
+      <div class="cakewrap" id="cakeArt" data-art="cake"></div>
+      <h2 class="bd-title">Happy Birthday!</h2>
+      <p class="bd-name" data-her></p>
+      <p class="wish" id="wishLine" aria-live="polite">Make a wish ✨</p>
+      <div class="btnrow">
+        <button class="pill outline" id="blowBtn" type="button"><span data-icon="wind"></span><span>BLOW CANDLE</span></button>
+        <button class="pill outline" id="relightBtn" type="button" hidden><span data-icon="redo"></span><span>RELIGHT CANDLE</span></button>
+        <button class="pill outline" id="cakeBack" type="button" hidden data-go="gifts"><span data-icon="gift"></span><span>BACK TO GIFTS</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen dark" id="stack" aria-label="Scratch memories">
+    <div class="bg navy lights"></div>
+    <button class="back" type="button" data-go="gifts"><span data-icon="back"></span><span>BACK</span></button>
+    <div class="scroll" id="stackScroll"><div class="stackcol" id="stackCol"></div></div>
+  </section>
+
+  <section class="screen" id="letter" aria-label="Love letter">
+    <div class="bg royal"></div>
+    <div class="inner center">
+      <div class="envelope" id="envelope">
+        <div class="env-back" data-art="envelopeBack"></div>
+        <div class="paper"><p id="peekText"></p></div>
+        <div class="env-front" data-art="envelopeFront"></div>
+        <div class="seal" data-art="bigHeart"></div>
+      </div>
+      <button class="pill white" id="openLetter" type="button"><span data-icon="mail"></span><span>Click to Open Letter 💌</span></button>
+    </div>
+    <button class="back br" type="button" data-go="gifts"><span>BACK</span></button>
+  </section>
+
+  <section class="screen" id="memories" aria-label="Our sweet memories">
+    <div class="bg" data-bg="paper"></div>
+    <div class="scroll" id="memScroll">
+      <header class="memhead">
+        <button class="pill white small" type="button" data-go="gifts"><span data-icon="gift"></span><span>BACK TO<br>GIFTS</span></button>
+        <div class="memtitle"><h1>Our Sweet Memories</h1><p>tap anything to explore,<br>scratch &amp; play ✨</p></div>
+        <button class="pill black small" id="memMusic" type="button"><i class="recdot"></i><span id="memMusicTxt">PLAY<br>MUSIC</span></button>
+      </header>
+      <div class="memwrap">
+        <div class="sticker guitar" data-art="guitar"></div>
+        <div class="sticker bouquet" data-art="bouquet"></div>
+        <div class="collage" id="collage"></div>
+
+        <button class="mapcard" id="mapCard" type="button" aria-label="Open memory map">
+          <div class="maphead"><span class="mt"><span data-icon="pin"></span> Memory map</span>
+            <span class="zoom"><span class="zb" id="zoomIn" role="button" tabindex="0" aria-label="Zoom in">+</span><span class="zb" id="zoomOut" role="button" tabindex="0" aria-label="Zoom out">-</span></span></div>
+          <div class="mapbox"><div class="mapinner" id="mapInner"></div></div>
+        </button>
+
+        <div class="player" id="player">
+          <div class="pl-top"><span class="pl-label"><i class="eq"><b></b><b></b><b></b></i> Now playing</span><span class="pl-tag">PREVIEW</span></div>
+          <div class="pl-main">
+            <div class="pl-art" id="plArt"></div>
+            <div class="pl-text"><strong id="plTitle"></strong><span id="plArtist"></span></div>
+            <button class="pl-play" id="plPlay" type="button" aria-label="Play"></button>
+          </div>
+          <div class="pl-bar"><span id="plNow">0:00</span><div class="track"><div class="fillbar" id="plFill"></div></div><span id="plDur">3:00</span></div>
+          <button class="chipbtn" id="openVinyl" type="button">🎵 Open Vinyl Player</button>
+        </div>
+
+        <div class="sticker-row">
+          <div class="kiss"><div data-art="lips"></div></div>
+          <div class="darling"><div data-art="darling"></div><span>"Darling, you're perfect."</span></div>
+        </div>
+        <p class="endnote">Made with love, for <span data-her></span> 💙</p>
+      </div>
+    </div>
+    <button class="vinylfab" id="vinylFab" type="button" aria-label="Open vinyl player"><div id="fabDisc"></div></button>
+  </section>
+
+</main>
+
+<div class="modal" id="letterModal" role="dialog" aria-modal="true" aria-label="Love letter" aria-hidden="true">
+  <article class="notebook">
+    <button class="xbtn" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    <h2 id="lmTitle"></h2>
+    <div class="lm-body" id="lmBody"></div>
+    <p class="lm-sign"><span id="lmSign"></span><strong data-me></strong></p>
+    <i class="waxseal" aria-hidden="true"></i>
+  </article>
+</div>
+
+<div class="modal" id="scratchModal" role="dialog" aria-modal="true" aria-label="Scratch memory" aria-hidden="true">
+  <article class="scmodal">
+    <button class="xbtn dark" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    <div class="scbox" id="scBox"><img id="scImg" alt=""></div>
+    <p class="sccap" id="scCap"></p>
+    <p class="scpct">🪄 Scratched: <b id="scPct">0%</b></p>
+    <div class="scbtns">
+      <button class="softbtn" id="scPrev" type="button"><span data-icon="back"></span> Prev</button>
+      <button class="softbtn" id="scReset" type="button"><span data-icon="redo"></span> Reset Scratch</button>
+      <button class="softbtn" id="scNext" type="button">Next <span data-icon="next"></span></button>
+    </div>
+  </article>
+</div>
+
+<div class="modal" id="mapModal" role="dialog" aria-modal="true" aria-label="Memory map" aria-hidden="true">
+  <article class="mapmodal">
+    <button class="xbtn dark" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    <h2>Memory map 📍</h2>
+    <p class="mm-sub" id="mmSub"></p>
+    <div class="mm-map" id="mmMap"></div>
+    <p class="mm-quote" id="mmQuote"></p>
+  </article>
+</div>
+
+<div class="modal" id="vinylModal" role="dialog" aria-modal="true" aria-label="Vinyl player" aria-hidden="true">
+  <article class="vinylmodal">
+    <button class="xbtn night" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    <div class="disc" id="disc"></div>
+    <h2 id="vmTitle"></h2>
+    <p id="vmArtist"></p>
+    <div class="vm-bar"><span id="vmNow">0:00</span><div class="track dark"><div class="fillbar" id="vmFill"></div></div><span id="vmDur">3:00</span></div>
+    <div class="vm-ctl">
+      <button class="vm-b" id="vmRestart" type="button" aria-label="Restart"><span data-icon="replay"></span></button>
+      <button class="vm-b big" id="vmPlay" type="button" aria-label="Play"></button>
+      <button class="vm-b" id="vmHeart" type="button" aria-label="Love it">💙</button>
+    </div>
+  </article>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/art.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/music.js"></script>
+<script src="js/scratch.js"></script>
+<script src="js/app.js"></script>
+<!--/BODY-->
+</body>
+</html>
